@@ -7,11 +7,11 @@ import { NextResponse } from "next/server";
 
 //delete the user by id
 export const DELETE= async(request,{params})=>{
-    const {id}=params;
-    console.log(id)
+    const {userId}=params;
+    
    
     try {
-        let user=await User.findByIdAndDelete(id);
+        let user=await User.findByIdAndDelete(userId);
         console.log(user)
         if(user)
         {
@@ -31,8 +31,9 @@ export const DELETE= async(request,{params})=>{
 
 
 //update the user by id
-export const PUT= async(request,{userId})=>{
-    console.log(userId)
+export const PUT= async(request,{params})=>{
+    const {userId}=params;
+   
     const {name,email,password,Address}= await request.json();
     try {
        const user= await User.findByIdAndUpdate(userId,{name,email,password,Address});
@@ -52,7 +53,8 @@ export const PUT= async(request,{userId})=>{
     }
 }
 //get user by id
-export const GET= async(request,{userId})=>{
+export const GET= async(request,{params})=>{
+    const {userId}=params;
     console.log(userId)
     try {
         const user=await User.findById(userId).select("-password");
