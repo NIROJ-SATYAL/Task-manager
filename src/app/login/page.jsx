@@ -1,43 +1,89 @@
 "use client"
 import React from 'react'
-import { Form,Formik,ErrorMessage,onSubmit ,Field } from 'formik'
+import { Form,Formik,ErrorMessage,Field } from 'formik'
+import Link from 'next/link'
+import * as yup from "yup";
 
 export const metadata = {
    title:"login page",
     description:"login page",
 }
 
+
+const initialValues={
+  email:'',
+  password:''
+
+}
+
+const validationSchema=yup.object({
+  email:yup.string().email('invalid email').required('email is required'),
+  password:yup.string().required('password is required').min(6,'password must be 6 char long')
+})
+
 const page = () => {
   const [show,setShow]=React.useState(false)
   return (
-    <div className='w-full h-full flex justify-center  items-center '>
-      <section className='   p-5 bg-slate-300 rounded-2xl w-full md:w-[40%]'>
-      <h1 className='text-bold font-bold text-center '>login page</h1>
-
-      <form >
-
-      <input type="email" placeholder="email" className="w-full p-2 my-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" />
-      <div className='relative'>
-
-      <input type={show?"text":"password"} placeholder="password" className="w-full p-2 my-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent" />
-      <span className='absolute top-4 right-4 cursor-pointer' onClick={()=>setShow(!show)}>{show?"hide":"show"}</span>
+    <div className="w-full  block   p-4 flex items-center justify-center">
+    <div className="bg-transparent py-6 px-10 sm:max-w-md w-full ">
+      <div className="sm:text-3xl text-4xl  font-bold text-center text-white mb-12">
+        Login  Form 
       </div>
-      <div className='flex justify-between items-center'>
-      <button className='bg-transparent px-5 text-center  rounded-2xl  hover:bg-slate-500 ease-in-out 0.5s ' >
-        login
-      </button>
+<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values)=>console.log(values)}>
+      <Form >
+       
+        <div >
+          <Field type="email" name="email" className="focus:outline-none text-white bg-transparent border-b w-full pb-2 border-sky-400 placeholder-white my-8" placeholder="Eamil Adress " />
+          <div className="text-red-600 mb-2 text-bold">
+          <ErrorMessage name='email' />
+          </div>
+        </div>
+       
+       <div >
+        <div className="relative">
+          <Field type={show?"text":"password"} name="password" className="focus:outline-none text-white bg-transparent border-b w-full pb-2 border-sky-400 placeholder-white mb-8" placeholder="Password " />
+          <span className='absolute top-1 right-4 cursor-pointer' onClick={()=>setShow(!show)}>{show?"hide":"show"}</span>
+          
+  
+        </div>
+        <div className="text-red-600 mb-2 text-bold">
+          <ErrorMessage name='password' />
 
-      <button className='bg-transparent px-5 text-center  rounded-2xl  hover:bg-slate-500 ease-in-out 0.5s ' >
-        <span>forgot password?</span>
-      </button>
-      </div>
-      </form>
+        </div>
+        </div>
+        <div className="flex">
+          <Field type="checkbox" className="border-sky-400 " defaultValue />
+          <div className="px-3 text-white">
+            I accept terms &amp; conditions 
+          </div>
+        </div>
+        <div className="flex justify-center my-6">
+          <button type='button' className=" rounded-full  p-3 w-full sm:w-56   bg-gradient-to-r from-sky-600  to-teal-300 text-white text-lg font-semibold ">
+            Login
+          </button>
+        </div>
+        <div className="flex justify-between items-center ">
+          <div>
+          
+          <Link href="#" className="text-white-600 hover:text-white transition ease-in-out 0.5s pl-2"> Sign Up</Link>
+          </div>
+
+          <Link href="#" className="text-white-600 hover:text-white transition ease-in-out 0.5s pl-2"> forgot password</Link>
 
 
-    </section>
+
+          
+        </div>
+      </Form>
+      </Formik>
     </div>
+  </div>
     
   )
 }
 
 export default page
+
+
+
+

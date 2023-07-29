@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
   return (
-    <nav className="w-full h-16 bg-orange-400 flex items-center sticky top-0 overflow-hidden">
+    <nav className="w-full h-16 bg-black flex items-center sticky top-0 overflow-hidden">
       <div className="w-full md:w-[90%] mx-auto my-auto flex justify-between items-center">
         <div className="brand">
           <h1 className="text-bold text-white text-3xl">
