@@ -22,6 +22,7 @@ const validationSchema=yup.object({
 })
 
 const page = () => {
+  document.title=metadata.title
   const [show,setShow]=React.useState(false)
   return (
     <div className="w-full  block   p-4 flex items-center justify-center">
@@ -58,7 +59,7 @@ const page = () => {
           </div>
         </div>
         <div className="flex justify-center my-6">
-          <button type='button' className=" rounded-full  p-3 w-full sm:w-56   bg-gradient-to-r from-sky-600  to-teal-300 text-white text-lg font-semibold ">
+          <button  className=" rounded-full  p-3 w-full sm:w-56   bg-gradient-to-r from-sky-600  to-teal-300 text-white text-lg font-semibold ">
             Login
           </button>
         </div>
@@ -70,9 +71,6 @@ const page = () => {
 
           <Link href="#" className="text-white-600 hover:text-white transition ease-in-out 0.5s pl-2"> forgot password</Link>
 
-
-
-          
         </div>
       </Form>
       </Formik>

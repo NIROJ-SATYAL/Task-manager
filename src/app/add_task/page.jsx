@@ -2,6 +2,8 @@
 import React from "react";
 import { Formik ,Form , Field , ErrorMessage} from "formik";
 import * as yup from "yup";
+import task_service from "@/services/task_service";
+import { toast } from "react-toastify";
 
 export const metadata = {
   title: "Add Task",
@@ -12,8 +14,9 @@ export const metadata = {
 const initialValues = {
   title: "",
   content: "",
-  deadline: "",
-  status: "",
+  completedDate: "",
+  status: "none",
+  userId:"64bfa318899896f030b992b3"
 };
 
 const validationSchema = yup.object({
@@ -24,20 +27,39 @@ const validationSchema = yup.object({
   content: yup
     .string()
     .required("Content must be required"),
-  deadline: yup
+  completedDate: yup
     .string()
     .required("Deadline must be required"),
   
 });
 
+const onSubmit = async (values,{resetForm}) => {
+  console.log(values);
+  try {
+    const data= await task_service(values)
+    if(data?.success===true){
+      toast.success(data?.message)
+      resetForm()
+
+    }
+    else{
+      toast.error(data?.message)
+    }
+  } catch (error) {
+    toast.error(error?.message)
+    
+  }
+};
+
 const page = () => {
+  document.title = metadata.title;
   return (
     <div className="grid grid-cols-12 items-center  justify-center">
       <div className="grid col-span-8 mb-3 mt-3 md:col-span-6 bg-transparent col-start-3 md:col-start-4 shadow shadow-2xl p-5">
         <h1 className="text-bold text-center text-white mb-4 ">
           Add your Task Here!!!
         </h1>
-<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={(values)=>console.log(values)}>
+<Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit} >
         <Form className="flex flex-col space-y-5">
           <div className="mt-2">
           <label htmlFor="" className="">
@@ -73,13 +95,13 @@ name='content'
             Task DeadLine
           </label>
           <Field
-          name='deadline'
+          name='completedDate'
             type="date"
             placeholder="Task Deadline"
             className="w-full p-2 my-2 border-2 border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200 focus:border-transparent"
           />
           <div className="text-red-600 text-bold">
-          <ErrorMessage name='deadline' />
+          <ErrorMessage name='completedDate' />
           </div>
           
           </div>

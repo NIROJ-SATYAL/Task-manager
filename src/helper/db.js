@@ -7,6 +7,7 @@ export  const db = async () => {
         await mongoose.connect(process.env.MONGO_DB_URL, {
          
             dbName: "work-manager",
+            connectTimeoutMS: 30000,
             });
             console.log("MongoDB Connected");
 

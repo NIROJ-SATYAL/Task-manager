@@ -1,14 +1,9 @@
-import Image from 'next/image'
+import React from 'react'
 
-
-export const metadata={
-
-    title:"Home page",
-    description:"Home page",
-}
-
-export default function Home() {
+const page = () => {
   return (
-   <h1>container</h1>
+    <div>page</div>
   )
 }
+
+export default page
